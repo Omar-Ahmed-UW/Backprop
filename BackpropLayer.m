@@ -24,7 +24,7 @@ classdef BackpropLayer
         function [obj, a] = forwardprop(obj, P)
             % uses vectorized approach to calculate inner product of all
             % weights with inputs then adds the correct biases.
-            n = (obj.W' *P) + obj.b;
+            n = (P*obj.W) + obj.b;
             a = logsig(n);
             obj.mostRecentN = n;
         end
