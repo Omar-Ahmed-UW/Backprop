@@ -2,6 +2,7 @@ classdef BackpropLayer
     properties
         W
         b
+        mostRecentN
     end
 
     methods
@@ -20,11 +21,19 @@ classdef BackpropLayer
             end        
         end
 
-        function a = forwardprop(obj, P)
+        function [obj, a] = forwardprop(obj, P)
             % uses vectorized approach to calculate inner product of all
             % weights with inputs then adds the correct biases.
             n = (obj.W' *P) + obj.b;
             a = logsig(n);
+            obj.mostRecentN = n;
+        end
+
+        function [obj, output] = layersensitivity(obj, x)
+            % calculates the sensitivity for this layer
+            % x represents the component from the following layer (either
+            % t-a or the sum of sensitivity*weight for each neuron)
+            output = -2*(derivlogsig(obj.mostRecentN)*x);
         end
 
         
