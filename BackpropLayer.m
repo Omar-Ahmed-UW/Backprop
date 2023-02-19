@@ -34,13 +34,8 @@ classdef BackpropLayer
         function [obj, output] = layerSensitivity(obj, x)
             % calculates the sensitivity for this layer
             % x represents the component from the following layer (either
-            % t-a or the sum of sensitivity*weight for each neuron)
-            
-            % I think this equation isn't generalized for all layers, it is
-            % just for computing the output layer sensitivity. The
-            % generalized equation for all other layers doesn't include
-            % '-2'
-            output = -2*(derivlogsig(obj.mostRecentN)*x);
+            % -2*(t-a) or the sum of sensitivity*weight for each neuron)
+            output = derivlogsig(obj.mostRecentN)*x;
         end
         
         function [obj] = updateLayer(obj, learningRate, sensitivity, prevLayerOutput)

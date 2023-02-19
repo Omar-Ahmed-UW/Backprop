@@ -36,7 +36,7 @@ classdef BackpropNetwork
         function [obj] = networkSensitivity(obj, targetOutput)
             % computes the sensitivties for all layers in the network using
             % the targetOutput for the output layer.
-            [obj.layer2, obj.s2] = obj.layer2.layerSensitivity(targetOutput - obj.a2);
+            [obj.layer2, obj.s2] = obj.layer2.layerSensitivity(-2*(targetOutput - obj.a2));
             [obj.layer1, obj.s1] = obj.layer1.layerSensitivity((obj.layer2.W'*obj.s2));
         end
     end
