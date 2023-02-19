@@ -29,7 +29,7 @@ classdef BackpropNetwork
             obj.layer2 = BackpropLayer(hidden, output);
 
             % todo: this was a total guess!!!
-            learningRate = 0.05;
+            obj.learningRate = 0.05;
         end
         
         function [obj, temp2] = networkForward(obj,input)
