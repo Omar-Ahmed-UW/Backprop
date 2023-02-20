@@ -33,18 +33,25 @@ classdef OneLayerBackpropNetwork
             % returns the final output
             obj.a0 = input;
             [obj.layer1, temp] = obj.layer1.layerForward(input);
+            temp = round(temp);
             obj.a1 = temp;
         end
 
-        function [obj] = networkSensitivityOneLayer(obj, targetOutput)
+        function [obj, temp] = networkSensitivityOneLayer(obj, targetOutput)
             % computes the sensitivties for all layers in the network using
             % the targetOutput for the output layer.
-            [obj.layer1, obj.s1] = obj.layer1.layerSensitivity(-2*(targetOutput - obj.a1));
+            [obj.layer1, temp] = obj.layer1.layerSensitivity(-2*(targetOutput - obj.a1));
+            obj.s1 = temp;
         end
 
         function obj = networkUpdateOneLayer(obj)
             % updates the weights and sensitivities for both layers
             obj.layer1 = obj.layer1.updateLayer(obj.learningRate, obj.s1, obj.a0);
+        end
+
+        function obj = batchUpdate(obj, sum, sumS)
+            obj.layer1.W = obj.layer1.W - obj.learningRate * sum;
+            obj.layer1.b = obj.layer1.b - obj.learningRate * sumS;
         end
     end
 end
