@@ -32,7 +32,7 @@ classdef OneLayerBackpropNetwork
             % propogates outputs forward through all layers
             % returns the final output
             obj.a0 = input;
-            [obj.layer1, temp] = round(obj.layer1.layerForward(input));
+            [obj.layer1, temp] = obj.layer1.layerForward(input);
             obj.a1 = temp;
         end
 
@@ -44,7 +44,7 @@ classdef OneLayerBackpropNetwork
 
         function obj = networkUpdateOneLayer(obj)
             % updates the weights and sensitivities for both layers
-            obj.layer1.updateLayer(obj.learningRate, obj.s1, obj.a0);
+            obj.layer1 = obj.layer1.updateLayer(obj.learningRate, obj.s1, obj.a0);
         end
     end
 end

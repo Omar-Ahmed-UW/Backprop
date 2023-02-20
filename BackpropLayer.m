@@ -12,8 +12,8 @@ classdef BackpropLayer
             [fr,fc] = size(first);
             [sr,sc] = size(second);
             if fr == 1 && fc == 1 && sr == 1 && sc == 1
-                obj.W = (-1 + (1+1).*rand(second, first))';
-                obj.b = (-1 + (1+1).*rand(second, 1))';
+                obj.W = (-1 + (1+1).*rand(second, first));
+                obj.b = (-1 + (1+1).*rand(second, 1));
             
             else
                 obj.W = first;
@@ -26,7 +26,7 @@ classdef BackpropLayer
             % weights with inputs then adds the correct biases.
             
             % TODO omar: Shouldn't this statement be obj.W' * P?
-            n = (P*obj.W) + obj.b;
+            n = (obj.W * P) + obj.b;
             a = logsig(n);
             obj.mostRecentN = n;
         end
@@ -35,7 +35,7 @@ classdef BackpropLayer
             % calculates the sensitivity for this layer
             % x represents the component from the following layer (either
             % -2*(t-a) or the sum of sensitivity*weight for each neuron)
-            output = derivlogsig(obj.mostRecentN)*x;
+            output = derivlogsig(obj.mostRecentN).*x;
         end
         
         function [obj] = updateLayer(obj, learningRate, sensitivity, prevLayerOutput)
