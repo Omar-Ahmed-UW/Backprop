@@ -1,4 +1,4 @@
-function a = testPart2(epochs, hiddenSize, batchSize, numBatches)
+function a = testPart2(epochs, hiddenSize, batchSize)
     load('mnist.mat', 'test', 'training');
     network = BackpropNetwork(784, hiddenSize, 10);
     
@@ -6,12 +6,15 @@ function a = testPart2(epochs, hiddenSize, batchSize, numBatches)
     sumB1 = zeros(hiddenSize, 1);
     sumW2 = zeros(10, hiddenSize);
     sumB2 = zeros(10, 1);
+
+    numBatches = floor(60000/batchSize);
+    numBatches = numBatches - 1;
     
     for k = 1:epochs
-        for i = 1:numBatches
+        for i = 0:numBatches
             for j = 1:batchSize
-                [network, ~] = network.networkForward(training.images(:, i*batchSize-j+1));
-                [network, temp1, temp2] = network.networkSensitivity(training.labels(:, i*batchSize-j+1));
+                [network, ~] = network.networkForward(training.images(:, i*batchSize+j));
+                [network, temp1, temp2] = network.networkSensitivity(training.labels(:, i*batchSize+j));
                 sumW1 = sumW1 + temp1*network.a0';
                 sumB1 = sumB1 + temp1;
                 sumW2 = sumW2 + temp2*network.a1';
