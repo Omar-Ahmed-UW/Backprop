@@ -56,9 +56,9 @@ classdef BackpropNetwork
             obj.layer2 = obj.layer2.updateLayer(obj.learningRate, obj.s2, obj.a1);
         end
 
-        function obj = batchUpdateNetowrk(obj, sumW1, sumB1, sumW2, sumB2)
-            obj = obj.layer1.batchUpdateLayer(sumW1, sumB1, obj.learningRate);
-            obj = obj.layer2.batchUpdateLayer(sumW2, sumB2, obj.learningRate);
+        function obj = batchUpdateNetwork(obj, sumW1, sumB1, sumW2, sumB2)
+            obj.layer1 = obj.layer1.batchUpdateLayer(sumW1, sumB1, obj.learningRate);
+            obj.layer2 = obj.layer2.batchUpdateLayer(sumW2, sumB2, obj.learningRate);
         end
     end
 end

@@ -49,7 +49,7 @@ classdef BackpropLayer
 
         function obj = batchUpdateLayer(obj, sumW, sumB, learnRate)
             obj.W = obj.W - learnRate * sumW;
-            obj.B = obj.B - learnRate * sumB;
+            obj.b = obj.b - learnRate * sumB;
         end
     end
 end
