@@ -1,39 +1,18 @@
-scores = zeros(1, 3);
+x = [20, 30, 40, 32];
+y = zeros(size(x));
 
-for i = 1:3
-    scores(i) = testPart2(10, 100, 20);
+for j = 1:4 % testing 4 different values
+    scores = zeros(1, 3);
+    for i = 1:3 % 3 trials each
+        scores(i) = testPart2(10, 100, x(j));
+    end
+    sort(scores);
+    y(j) = scores(2); % using the median of 3 trials
 end
 
-disp("20: ")
-disp(scores);
-disp("-------------------------")
-
-scores = zeros(1, 3);
-
-for i = 1:3
-    scores(i) = testPart2(10, 100, 30);
-end
-
-disp("30: ")
-disp(scores);
-disp("-------------------------")
-
-scores = zeros(1, 3);
-
-for i = 1:3
-    scores(i) = testPart2(10, 100, 40);
-end
-
-disp("40: ")
-disp(scores);
-disp("-------------------------")
-
-scores = zeros(1, 3);
-
-for i = 1:3
-    scores(i) = testPart2(10, 100, 32);
-end
-
-disp("32: ")
-disp(scores);
-disp("-------------------------")
+figure
+hold on
+plot(x, y);
+xlabel('Batch size');
+ylabel('Classification accuracy');
+hold off
