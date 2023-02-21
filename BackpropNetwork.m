@@ -41,17 +41,24 @@ classdef BackpropNetwork
             obj.a2 = temp2;
         end
 
-        function [obj] = networkSensitivity(obj, targetOutput)
+        function [obj, temp1, temp2] = networkSensitivity(obj, targetOutput)
             % computes the sensitivties for all layers in the network using
             % the targetOutput for the output layer.
-            [obj.layer2, obj.s2] = obj.layer2.layerSensitivity(-2*(targetOutput - obj.a2));
-            [obj.layer1, obj.s1] = obj.layer1.layerSensitivity((obj.layer2.W'*obj.s2));
+            [obj.layer2, temp2] = obj.layer2.layerSensitivity(-2*(targetOutput - obj.a2));
+            [obj.layer1, temp1] = obj.layer1.layerSensitivity((obj.layer2.W'*temp2));
+            obj.s2 = temp2;
+            obj.s1 = temp1;
         end
 
         function obj = networkUpdate(obj)
             % updates the weights and sensitivities for both layers
-            obj.layer1.updateLayer(obj.learningRate, obj.s1, obj.a0);
-            obj.layer2.updateLayer(obj.learningRate, obj.s2, obj.a1);
+            obj.layer1 = obj.layer1.updateLayer(obj.learningRate, obj.s1, obj.a0);
+            obj.layer2 = obj.layer2.updateLayer(obj.learningRate, obj.s2, obj.a1);
+        end
+
+        function obj = batchUpdateNetowrk(obj, sumW1, sumB1, sumW2, sumB2)
+            obj = obj.layer1.batchUpdateLayer(sumW1, sumB1, obj.learningRate);
+            obj = obj.layer2.batchUpdateLayer(sumW2, sumB2, obj.learningRate);
         end
     end
 end

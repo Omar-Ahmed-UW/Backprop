@@ -46,5 +46,10 @@ classdef BackpropLayer
             obj.W = obj.W - learningRate*sensitivity*(prevLayerOutput');
             obj.b = obj.b - learningRate*sensitivity;        
         end
+
+        function obj = batchUpdateLayer(obj, sumW, sumB, learnRate)
+            obj.W = obj.W - learnRate * sumW;
+            obj.B = obj.B - learnRate * sumB;
+        end
     end
 end
