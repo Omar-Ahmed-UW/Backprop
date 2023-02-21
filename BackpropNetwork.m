@@ -52,11 +52,14 @@ classdef BackpropNetwork
 
         function obj = networkUpdate(obj)
             % updates the weights and sensitivities for both layers
+            %   iterative, called after each input
             obj.layer1 = obj.layer1.updateLayer(obj.learningRate, obj.s1, obj.a0);
             obj.layer2 = obj.layer2.updateLayer(obj.learningRate, obj.s2, obj.a1);
         end
 
         function obj = batchUpdateNetwork(obj, sumW1, sumB1, sumW2, sumB2)
+            % updates the weights and sensitivities for both layers
+            %   batch-based, called after a certain number of inputs
             obj.layer1 = obj.layer1.batchUpdateLayer(sumW1, sumB1, obj.learningRate);
             obj.layer2 = obj.layer2.batchUpdateLayer(sumW2, sumB2, obj.learningRate);
         end

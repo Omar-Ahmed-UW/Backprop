@@ -48,6 +48,8 @@ classdef BackpropLayer
         end
 
         function obj = batchUpdateLayer(obj, sumW, sumB, learnRate)
+            % updates the weights and biases of this layer after a batch of
+            % inputs have been sent through
             obj.W = obj.W - learnRate * sumW;
             obj.b = obj.b - learnRate * sumB;
         end
